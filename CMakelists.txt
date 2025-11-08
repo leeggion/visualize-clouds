@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.10)
+project(BAL_Viewer CXX)
+
+# Требуем C++14 или новее (для Open3D)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# --------------------------------------------------------------------
+# 1. Находим библиотеку Open3D
+# --------------------------------------------------------------------
+# Укажите путь к папке, где вы установили Open3D
+# (например, /home/user/open3d_install/lib/cmake/Open3D)
+# Вы можете раскомментировать строку ниже и задать путь,
+# либо передать его через командную строку:
+# cmake -DOpen3D_DIR=/path/to/open3d/install/lib/cmake/Open3D ..
+
+# set(Open3D_DIR "/path/to/open3d_install/lib/cmake/Open3D")
+
+find_package(Open3D REQUIRED)
+
+# --------------------------------------------------------------------
+# 2. Находим библиотеку OpenCV
+# --------------------------------------------------------------------
+find_package(OpenCV REQUIRED)
+
+# --------------------------------------------------------------------
+# 3. Собираем проект
+# --------------------------------------------------------------------
+
+# Добавляем исходные файлы
+add_executable(bal_viewer
+    src/main.cpp
+)
+# Подключаем (линкуем) Open3D и OpenCV к нашему приложению
+target_link_libraries(bal_viewer
+    PRIVATE
+    Open3D::Open3D
+    ${OpenCV_LIBS}
+)
+
+# Указываем Open3D, где искать его заголовки (включая Eigen)
+target_link_libraries(bal_viewer
+    PRIVATE
+    Open3D::Open3D
+    ${OpenCV_LIBS}
+)
